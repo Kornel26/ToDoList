@@ -1,10 +1,26 @@
 import { useState } from "react";
-import { NewTodoForm } from "./NewTodoForm";
-import { TodoList } from "./TodoList";
+import { NewTodoForm } from "./components/NewTodoForm";
+import { TodoList } from "./components/TodoList";
+import { HttpClient } from "./api/HttpClient";
+import { useEffect } from "react";
 
 export default function App() {
 
+  const httpClient = new HttpClient();
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    async function fetchTodos() {
+      try {
+        const todos = await httpClient.get('api/todo');
+        setTodos(todos);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchTodos();
+  }, []);
 
   function addTodo(title) {
     setTodos(currentTodos => {
