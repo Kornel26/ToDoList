@@ -9,28 +9,30 @@ export default function App() {
   const httpClient = new HttpClient();
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
-    async function fetchTodos() {
-      try {
-        const todos = await httpClient.get('api/todo');
-        setTodos(todos);
-      } catch (error) {
-        console.error(error);
-      }
+  async function fetchTodos() {
+    try {
+      const todos = await httpClient.get('todo');
+      setTodos(todos ?? []);
+    } catch (error) {
+      console.error(error);
     }
+  }
 
+  useEffect(() => {
     fetchTodos();
   }, []);
 
-  function addTodo(title) {
-    setTodos(currentTodos => {
-      return [
-        ...currentTodos,
-        {
-          id: Math.floor(Math.random() * 1_000_000), title, compelted: false
-        }
-      ]
-    })
+  async function addTodo(title) {
+    try {
+      const todo = {
+        title: title,
+        isCompleted: false
+      }
+      const newTodo = await httpClient.post('todo', todo);
+      fetchTodos();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function toggleTodo(id, compelted) {
