@@ -2,7 +2,7 @@ export function HttpClient() {
 
     const API_URL = 'https://localhost:44377/api/';
 
-    async function get(endpoint) {
+    async function Get(endpoint) {
         try {
             const response = await fetch(`${API_URL}${endpoint}`, {
                 method: 'GET'
@@ -15,7 +15,7 @@ export function HttpClient() {
         }
     }
 
-    async function post(endpoint, body) {
+    async function Post(endpoint, body) {
         try {
             const response = await fetch(`${API_URL}${endpoint}`, {
                 method: 'POST',
@@ -32,6 +32,25 @@ export function HttpClient() {
         }
     }
 
-    return { get, post };
+    async function Put(endpoint, body) {
+
+    }
+
+    async function Delete(endpoint, body) {
+        try {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            });
+            await response;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return { Get, Post, Put, Delete };
 
 }

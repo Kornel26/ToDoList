@@ -22,7 +22,12 @@ namespace ToDoList
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-                app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader());
+                app.UseCors(options => {
+                    options
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .WithMethods("GET", "PUT", "POST", "DELETE");
+                });
             }
 
             app.UseHttpsRedirection();

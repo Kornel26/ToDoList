@@ -11,15 +11,16 @@ export default function App() {
 
   async function fetchTodos() {
     try {
-      const todos = await httpClient.get('todo');
+      const todos = await httpClient.Get('todo');
       setTodos(todos ?? []);
+      console.log(todos);
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    fetchTodos();
+     fetchTodos();
   }, []);
 
   async function addTodo(title) {
@@ -28,7 +29,7 @@ export default function App() {
         title: title,
         isCompleted: false
       }
-      const newTodo = await httpClient.post('todo', todo);
+      const newTodo = await httpClient.Post('todo', todo);
       fetchTodos();
     } catch (error) {
       console.error(error);
@@ -47,13 +48,19 @@ export default function App() {
     })
   }
 
-  function deleteTodo(id) {
-    setTodos(currentTodos => {
-      return currentTodos.filter(todo => todo.id !== id)
-    })
+  async function deleteTodo(id) {
+    try {
+      const todo = {
+        id: id,
+        title: "",
+        isCompleted: false
+      }
+      const newTodo = await httpClient.Delete('todo', todo);
+      fetchTodos();
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  console.log(todos);
 
   return (
     <>
