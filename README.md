@@ -8,6 +8,10 @@ npm i
 npm run dev
 ```
 
+## BE
+
+**Note:** Replace `ConnectionStrings.DefaultConnection` with your actual connection string inside `appsettings.json`.
+
 ## DB
 
 ```
