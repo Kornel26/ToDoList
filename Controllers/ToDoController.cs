@@ -66,13 +66,14 @@ namespace ToDoList.Controllers
             return BadRequest("Unable to update the ToDoItem.");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(ToDoItem toDoItem)
         {
-            var toDoItem = await _context.ToDoItems.FirstOrDefaultAsync(x => x.Id == id);
-            if(toDoItem == null) return NotFound($"The item with ID {id} does not exist.");
+            var id = toDoItem.Id;
+            var toDoItemToDelete = await _context.ToDoItems.FirstOrDefaultAsync(x => x.Id == id);
+            if(toDoItemToDelete == null) return NotFound($"The item with ID {id} does not exist.");
 
-            _context.Remove(toDoItem);
+            _context.Remove(toDoItemToDelete);
             int result = await _context.SaveChangesAsync();
             if (result > 0) return Ok();
 

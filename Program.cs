@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ToDoList.Models;
 
 namespace ToDoList
@@ -23,6 +22,12 @@ namespace ToDoList
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors(options => {
+                    options
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .WithMethods("GET", "PUT", "POST", "DELETE");
+                });
             }
 
             app.UseHttpsRedirection();
