@@ -1,6 +1,6 @@
 export function HttpClient() {
 
-    const API_URL = 'https://localhost:44377/api/';
+    const API_URL = 'https://localhost:7215/api/';
 
     async function Get(endpoint) {
         try {
