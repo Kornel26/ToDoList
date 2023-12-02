@@ -33,7 +33,20 @@ export function HttpClient() {
     }
 
     async function Put(endpoint, body) {
-
+        try {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 
     async function Delete(endpoint, body) {

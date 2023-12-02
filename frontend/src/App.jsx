@@ -36,16 +36,16 @@ export default function App() {
     }
   }
 
-  function toggleTodo(id, compelted) {
-    setTodos(currentTodos => {
-      return currentTodos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, compelted }
-        }
-
-        return todo;
-      })
-    })
+  async function toggleTodo(id, compelted) {
+    const todo = todos.find(todo => todo.id === id);
+    if (!todo) return;
+    todo.isCompleted = compelted;
+    try {
+      const newTodo = await httpClient.Put('todo', todo);
+      fetchTodos();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function deleteTodo(id) {
@@ -55,7 +55,7 @@ export default function App() {
         title: "",
         isCompleted: false
       }
-      const newTodo = await httpClient.Delete('todo', todo);
+      await httpClient.Delete('todo', todo);
       fetchTodos();
     } catch (error) {
       console.error(error);
